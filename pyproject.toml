@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "domain92"
-version = "1.3.2"
+version = "1.3.2.1"
 description = "A totally rad cli tool to automate freedns link creation"
 authors = ["Cbass92 <contact@cbass92.org>"]
 readme = "README.md"
@@ -26,6 +26,8 @@ pytesseract = "^0.3.13"
 lolpython = "^2.2.0"
 pysocks = "^1.7.1"
 stem = "^1.8.2"
+temp-mails = "^2.2.0"
+random-header-generator = "^1.2"
 
 
 [build-system]
