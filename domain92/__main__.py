@@ -116,7 +116,7 @@ domainlist = []
 domainnames = []
 checkprint("getting ip list")
 iplist = req.get(
-    "https://raw.githubusercontent.com/sebastian-92/byod-ip/refs/heads/master/byod.json"
+    "https://github.com/survivorwastaken/byod/raw/refs/heads/main/ips.txt"
 ).text
 iplist = eval(iplist)
 
