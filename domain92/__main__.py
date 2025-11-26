@@ -19,7 +19,7 @@ import lolpython
 import time
 import random_header_generator
 import temp_mails
-import websocket_client
+import websocket
 headergen = random_header_generator.HeaderGenerator()
 parser = argparse.ArgumentParser(
     description="Automatically creates links for an ip on freedns"
@@ -117,7 +117,7 @@ domainlist = []
 domainnames = []
 checkprint("getting ip list")
 iplist = req.get(
-    "https://github.com/survivorwastaken/byod/raw/refs/heads/main/ips.txt"
+    "https://cdn.jsdelivr.net/gh/survivorwastaken/byod/ips.json"
 ).text
 iplist = eval(iplist)
 
