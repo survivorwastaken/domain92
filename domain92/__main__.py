@@ -19,7 +19,7 @@ import lolpython
 import time
 import random_header_generator
 import temp_mails
-import websockets
+import websocket-client
 headergen = random_header_generator.HeaderGenerator()
 parser = argparse.ArgumentParser(
     description="Automatically creates links for an ip on freedns"
