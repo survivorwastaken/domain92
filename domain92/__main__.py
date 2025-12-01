@@ -20,6 +20,7 @@ import time
 import random_header_generator
 import temp_mails
 from websocket import WebSocketApp
+import json
 headergen = random_header_generator.HeaderGenerator()
 parser = argparse.ArgumentParser(
     description="Automatically creates links for an ip on freedns"
@@ -116,11 +117,7 @@ else:
 domainlist = []
 domainnames = []
 checkprint("getting ip list")
-iplist = req.get(
-    "https://raw.githubusercontent.com/survivorwastaken/byod/refs/heads/main/ips.json"
-).text
-iplist = eval(iplist)
-
+iplist = json.loads(req.get("https://raw.githubusercontent.com/survivorwastaken/byod/refs/heads/main/ips.json").text)
 
 def getpagelist(arg):
     arg = arg.strip()
@@ -590,6 +587,8 @@ def init():
         checkprint("Finding domain ID for: " + args.single_tld)
         non_random_domain_id = find_domain_id(args.single_tld)
         checkprint(f"Using single domain ID: {non_random_domain_id}")
+    if args.check_filter:
+        getdomains_unblocked(args.pages, args.check_filter)
     else:
         finddomains(args.pages)
 
@@ -597,12 +596,37 @@ def init():
         createlinks(args.number)
 
 
-def chooseFrom(dictionary, message):
-    checkprint(message)
-    for i, key in enumerate(dictionary.keys()):
-        checkprint(f"{i+1}. {key}")
-    choice = int(input("Choose an option by number: "))
-    return list(dictionary.keys())[choice - 1]
+def chooseFrom(options: dict, prompt: str):
+    keys = list(options.keys())
+
+    print(prompt)
+    print()
+
+    for idx, name in enumerate(keys, 1):
+        print(f"{idx}. {name} → {options[name]}")
+
+    print(f"{len(keys) + 1}. custom (enter your own IP)")
+
+    print()
+
+    while True:
+        choice = input("Choose an option: ").strip()
+
+        if not choice.isdigit():
+            print("Please enter a number.")
+            continue
+
+        choice = int(choice)
+
+        if 1 <= choice <= len(keys):
+            key = keys[choice - 1]
+            return key
+
+        if choice == len(keys) + 1:
+            return "custom"
+
+        print("Invalid choice, try again.")
+
 
 
 if __name__ == "__main__":
